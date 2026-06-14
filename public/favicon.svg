@@ -1,0 +1,10 @@
+<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#F97316" />
+    </linearGradient>
+  </defs>
+  <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linejoin="round" />
+  <text x="20" y="20" text-anchor="middle" dominant-baseline="central" font-family="Oswald, system-ui, sans-serif" font-weight="700" font-size="26" fill="#FBBF24">M</text>
+</svg>
