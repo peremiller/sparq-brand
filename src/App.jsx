@@ -2,6 +2,14 @@ import { useEffect, useState } from 'react'
 import Hexmark from './components/Hexmark.jsx'
 import Section from './components/Section.jsx'
 
+// Years of professional experience since December 2011 — recomputed on every load,
+// so it advances automatically each year (e.g. 14+ now, 15+ from December 2026).
+const CAREER_START_YEAR = 2011
+const CAREER_START_MONTH = 12 // December
+const now = new Date()
+const experienceYears =
+  now.getFullYear() - CAREER_START_YEAR - (now.getMonth() + 1 < CAREER_START_MONTH ? 1 : 0)
+
 const NAV_LINKS = [
   ['Story', '#story'],
   ['Pillars', '#pillars'],
@@ -13,7 +21,7 @@ const NAV_LINKS = [
 ]
 
 const STORY_CARDS = [
-  ['Quality engineering veteran', '14+ years of QA across banking, healthcare, energy, and legal — currently driving delivery for Constellation Energy and Exterro.'],
+  ['Quality engineering veteran', `${experienceYears}+ years of QA across banking, healthcare, energy, and legal — currently driving delivery for Constellation Energy and Exterro.`],
   ['Builder of ventures', 'Founder behind the SPARQ brand universe — nine ventures spanning tech, travel, wellness, and content.'],
   ['Creator at heart', 'Filmmaker, songwriter, and fitness content creator turning ideas into films, music, and movement.'],
   ['Rooted in the Philippines', 'Grounded in Filipino identity, faith, and family — building from Las Piñas for a global audience.'],
@@ -188,7 +196,7 @@ export default function App() {
             </div>
             <div className="hero__stats">
               <div className="stat">
-                <div className="stat__value">14+</div>
+                <div className="stat__value">{experienceYears}+</div>
                 <div className="stat__label">years in quality engineering</div>
               </div>
               <div className="stat">
