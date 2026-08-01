@@ -401,7 +401,7 @@ export default function App() {
               </a>
               <a
                 className="btn btn--ghost"
-                href="/AJ-Miller-T-Perez-Resume.pdf"
+                href="https://raw.githubusercontent.com/peremiller/aj-miller-t-perez/master/public/AJ-Miller-T-Perez-Resume.pdf"
                 target="_blank"
                 rel="noreferrer"
               >
