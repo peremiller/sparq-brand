@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Hexmark from './components/Hexmark.jsx'
 import Section from './components/Section.jsx'
 
@@ -102,6 +102,7 @@ const TRAJ = [
 export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const menuButton = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -113,7 +114,7 @@ export default function App() {
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const els = document.querySelectorAll('.reveal')
-    if (reduce) {
+    if (reduce || typeof IntersectionObserver === 'undefined') {
       els.forEach((el) => el.classList.add('visible'))
       return
     }
@@ -132,20 +133,38 @@ export default function App() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const closeOnDesktop = () => {
+      if (window.innerWidth > 760) setMenuOpen(false)
+    }
+    window.addEventListener('resize', closeOnDesktop)
+    return () => window.removeEventListener('resize', closeOnDesktop)
+  }, [])
+
   const closeMenu = () => setMenuOpen(false)
 
   const year = new Date().getFullYear()
 
   return (
     <>
-      <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`}>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <nav
+        aria-label="Primary navigation"
+        className={`nav${scrolled ? ' nav--scrolled' : ''}`}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && menuOpen) {
+            setMenuOpen(false)
+            menuButton.current?.focus()
+          }
+        }}
+      >
         <a className="nav__brand" href="#top">
           <Hexmark letter="M" />
           <span className="nav__name">
             Miller T. Perez <em>“AJ”</em>
           </span>
         </a>
-        <div className={`nav__links${menuOpen ? ' open' : ''}`}>
+        <div id="primary-nav-links" className={`nav__links${menuOpen ? ' open' : ''}`}>
           {NAV_LINKS.map(([label, href]) => (
             <a key={href} href={href} onClick={closeMenu}>
               {label}
@@ -153,8 +172,12 @@ export default function App() {
           ))}
         </div>
         <button
+          ref={menuButton}
+          type="button"
           className="nav__toggle"
-          aria-label="Toggle menu"
+          aria-controls="primary-nav-links"
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
           onClick={() => setMenuOpen((o) => !o)}
         >
           <span></span>
@@ -163,7 +186,7 @@ export default function App() {
         </button>
       </nav>
 
-      <main>
+      <main id="main-content" tabIndex="-1">
         {/* HERO */}
         <header className="hero" id="top">
           <div className="hero__spark"></div>
