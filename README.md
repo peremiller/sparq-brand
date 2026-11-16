@@ -21,5 +21,5 @@ npm run preview  # preview the production build locally
 
 ## Notes
 
-- The résumé link (`/AJ-Miller-T-Perez-Resume.pdf`) is a placeholder — the PDF is not bundled, so that link currently 404s. Drop the file into `public/` to enable it.
+- The résumé link uses the existing bundled `public/AJ-Miller-T-Perez-Resume.pdf`, served at `/AJ-Miller-T-Perez-Resume.pdf` by Vite/Vercel. Quality CI verifies the binary is included in the build.
 - External links (LinkedIn, Suno, the QA portfolio) open in a new tab.
