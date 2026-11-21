@@ -22,3 +22,14 @@ test('Vite production build includes the unmodified résumé PDF', () => {
   const index = read('dist/index.html').toString('utf8')
   assert.match(index, /<html\b/i)
 })
+
+test('mobile navigation focuses the first visible link and Escape restores the toggle', () => {
+  const app = read('src/App.jsx').toString('utf8')
+  assert.match(app, /const navLinks = useRef\(null\)/)
+  assert.match(app, /ref=\{navLinks\}/)
+  assert.match(app, /if \(!menuOpen \|\| window\.innerWidth > 760\) return/)
+  assert.match(app, /navLinks\.current\?\.querySelector\('a'\)\?\.focus\(\)/)
+  assert.match(app, /event\.key === 'Escape' && menuOpen/)
+  assert.match(app, /menuButton\.current\?\.focus\(\)/)
+  assert.match(app, /aria-expanded=\{menuOpen\}/)
+})
