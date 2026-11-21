@@ -103,6 +103,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const menuButton = useRef(null)
+  const navLinks = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -141,6 +142,13 @@ export default function App() {
     return () => window.removeEventListener('resize', closeOnDesktop)
   }, [])
 
+  useEffect(() => {
+    // Mobile links precede the toggle in DOM order. Move focus into the
+    // revealed menu so keyboard users can reach those links immediately.
+    if (!menuOpen || window.innerWidth > 760) return
+    navLinks.current?.querySelector('a')?.focus()
+  }, [menuOpen])
+
   const closeMenu = () => setMenuOpen(false)
 
   const year = new Date().getFullYear()
@@ -164,7 +172,7 @@ export default function App() {
             Miller T. Perez <em>“AJ”</em>
           </span>
         </a>
-        <div id="primary-nav-links" className={`nav__links${menuOpen ? ' open' : ''}`}>
+        <div id="primary-nav-links" ref={navLinks} className={`nav__links${menuOpen ? ' open' : ''}`}>
           {NAV_LINKS.map(([label, href]) => (
             <a key={href} href={href} onClick={closeMenu}>
               {label}
