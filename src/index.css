@@ -7,7 +7,7 @@ html{scroll-padding-top:84px}
 .skip-link:focus{transform:translateY(0)}
 a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
 @media (max-width:760px){
-  .nav__links{visibility:hidden;pointer-events:none}
+  .nav__links{visibility:hidden;pointer-events:none;max-height:calc(100vh - 64px);max-height:calc(100dvh - 64px);overflow-y:auto;overscroll-behavior:contain}
   .nav__links.open{visibility:visible;pointer-events:auto}
 }
 @media (max-width:420px){
