@@ -33,3 +33,8 @@ test('mobile navigation focuses the first visible link and Escape restores the t
   assert.match(app, /menuButton\.current\?\.focus\(\)/)
   assert.match(app, /aria-expanded=\{menuOpen\}/)
 })
+
+test('mobile navigation has a viewport-bounded scrollable link list', () => {
+  const css = read('src/index.css').toString('utf8')
+  assert.match(css, /\.nav__links\{visibility:hidden;pointer-events:none;max-height:calc\(100vh - 64px\);max-height:calc\(100dvh - 64px\);overflow-y:auto;overscroll-behavior:contain\}/)
+})
